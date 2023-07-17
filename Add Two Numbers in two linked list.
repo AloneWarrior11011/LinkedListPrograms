@@ -1,0 +1,48 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+// l1 = 7->2->4->3 and l2 = 5->6->4  ans linkedlist will be =  7 -> 8-> 0-> 7
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<Integer> s1  = new Stack<>();
+        Stack<Integer> s2 = new Stack<>();
+
+       // first we have to push the values of both linkedlist into the stack.
+       while(l1 != null)
+       {
+           s1.push(l1.val);
+           l1 = l1.next;  // it will point to the next node.
+       }
+       while(l2 != null)
+       {
+           s2.push(l2.val);
+           l2 = l2.next;
+       }
+        // here we create ans node which stores the addition of two numbers of individual nodes
+        ListNode ans = new ListNode();
+        int carry = 0, tsum = 0;
+
+        while(!s1.empty() || !s2.empty())
+        {
+            if(!s1.empty()) tsum = tsum + s1.pop(); // here pop back from the stack and add them into the to sum . 
+            if(!s2.empty()) tsum = tsum + s2.pop(); 
+
+            ans.val = tsum % 10 ; // ans.val = 7 % 10 = 7
+             carry = tsum / 10; // which will give carry 7/10 = 0 as carry.
+            // next step is to create a newnode where we can store out tsum
+            ListNode head = new ListNode(carry);
+            head.next = ans;
+            ans = head;
+            // update tsum 
+            tsum  = carry; // carry = 7 / 10 = 0; and tsum becomes = 0
+        }
+        return carry==0 ? ans.next : ans;
+    }
+}
