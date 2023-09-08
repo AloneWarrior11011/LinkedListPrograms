@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+
+class Node
+{
+    public :
+    int data;
+    Node* next;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+//-----------O(n) best approach to find the middle of the linked list.---------
+Node* middleOfTheLL(Node* &head)
+{
+      if(head->next == NULL || head == NULL) return head;
+
+      if(head->next->next == NULL) return head->next; 
+
+      Node* slow = head;
+      Node* fast = head->next;
+
+      while(fast != NULL)
+      {
+        fast = fast->next;
+           if(fast != NULL)
+           {
+             fast = fast->next;
+           }
+           slow = slow->next;
+      }
+      return slow;
+}
+void insertNode(Node* &head,Node* &tail,int d)
+{
+    if(head == NULL)
+    {
+        Node* temp = new Node(d);
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        Node* temp = new Node(d);
+        tail->next = temp;
+        tail = tail->next;
+    }
+}
+void printLL(Node* &head)
+{
+    Node* ptr = head;
+    while(ptr != NULL)
+    {
+        cout<<ptr->data<<" ";
+        ptr = ptr->next;
+    }
+}
+main()
+{
+      Node* head = NULL;
+      Node* tail = NULL;
+      insertNode(head,tail,11);
+      insertNode(head,tail,12);
+      insertNode(head,tail,13);
+      insertNode(head,tail,14);
+      cout<<"Head of the linked list : "<<head->data<<endl;
+      cout<<"Tail of the linked list : "<<tail->data<<endl;
+      printLL(head);
+      cout<<endl;
+
+      cout<<"Middle of the linked list (LC_problem)"<<endl;
+      head =  middleOfTheLL(head);
+      printLL(head);
+}
