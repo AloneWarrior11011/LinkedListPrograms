@@ -1,0 +1,118 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node
+{
+    public :
+
+    int data;
+    Node* next;
+
+    Node(int data)
+    {
+        this->data = data;
+        next = NULL;
+    }
+};
+
+void printLL(Node* &head)
+{
+    Node* ptr = head;
+    while(ptr != NULL)
+    {
+        cout<<ptr->data<<" ";
+        ptr = ptr->next;
+    }
+}
+void insertNode(Node* &head,Node* &tail,int d)
+{
+    if(head == NULL)
+    {
+        Node* newNode = new Node(d);
+        tail = newNode;
+        head = newNode;
+    }
+    else
+    {
+         Node* newNode = new Node(d);
+         tail->next = newNode;
+         tail = newNode;
+    }
+}
+Node* cycleDetection(Node* &head)
+{
+    Node* slow = head;
+    Node* fast = head;
+
+    while(slow != NULL && fast != NULL) 
+    {
+        fast = fast->next;
+        if(fast != NULL)
+        {
+            fast = fast->next;
+        }
+        slow = slow->next;
+
+        if(slow == fast)
+        {
+        cout<<"Cycle present at node : "<<fast->data<<endl; // we can take any pointe it may be slow or fast...cuz it's a cycle.
+        return fast;
+        }
+    }
+    return NULL; // cycle not formed
+}
+Node* getStartingNode_Loop(Node* &head,Node* &intersection)
+{
+    Node* slow = head;
+    
+    while(slow != intersection)
+    {
+        slow = slow->next;
+        intersection = intersection->next;
+    }
+    return intersection;
+}
+
+Node* removeLoop(Node* &head)
+{
+    Node* intersect = cycleDetection(head);
+    Node* startOfNode = getStartingNode_Loop(head,intersect);
+    Node* k = startOfNode->next;
+
+    while(k->next != startOfNode)
+    {
+        k = k -> next;
+    }
+
+    k->next = NULL;
+    return head;
+}
+main()
+{
+       Node* head = NULL;
+       Node* tail = NULL;
+
+       insertNode(head,tail,7);
+       insertNode(head,tail,2);
+       insertNode(head,tail,9);
+       insertNode(head,tail,4);
+       insertNode(head,tail,3);
+       printLL(head);
+       cout<<endl;
+       // make a list having cycle 
+       tail->next = head->next; // cycle form  3------>2 .... 3 be the tail of the linked list and 2 be starting node of the cycle.
+       
+      Node* intersect = cycleDetection(head);
+      if(intersect)
+      cout<<"cycle is present"<<endl;
+      else
+      cout<<"cycle is not present"<<endl;
+
+      Node* getNode =  getStartingNode_Loop(head,intersect);
+      
+      cout<<"Starting node in a cycle is : "<<getNode->data;
+
+      removeLoop(head);
+      cout<<"List after removing loop will be :) "<<endl;
+      printLL(head);
+}
