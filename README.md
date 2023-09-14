@@ -1,2 +1,4 @@
 # LinkedListPrograms
-LINKED LIST PROGRAMS WHICH ARE FAMOUS QUESTION THAT HAVE CHANCES TO ASKED IN AN INTERVIEW ROUNDS
+Here's mine little contribution for the coding fellows,
+these are some question that will have chances to asked
+in an interview rounds of famous MNC's
