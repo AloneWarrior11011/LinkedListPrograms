@@ -1,0 +1,67 @@
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node()
+    {
+        this->data = 0;
+        next = NULL;
+    }
+    Node(int data)
+    {
+        this->data = data; 
+        this->next = NULL;
+    }
+    Node(int data, Node* next)
+    {
+        this->data = data;
+        this->next = next;
+    }
+};
+*/
+
+Node* sortList(Node *head){
+    // Write your code here.
+    if(head == NULL) return NULL;
+
+    int zeroCnt = 0, oneCnt = 0, twoCnt = 0;
+
+    Node* temp = head;
+
+     // counting the number of 0's,1's,2's
+    while(temp != NULL)
+    {
+        if(temp->data == 0) zeroCnt++;
+
+        else if(temp->data == 1) oneCnt++;
+
+        else if(temp->data == 2) twoCnt++;
+
+        temp = temp->next;
+    }
+
+    // again set it out temp to head and replace the data
+    temp = head;
+    while(temp != NULL)
+    {
+        if(zeroCnt != 0) 
+        {
+            temp->data = 0;
+            zeroCnt--;
+        }
+        else if(oneCnt != 0) 
+        {
+            temp->data = 1;
+            oneCnt--;
+        }
+        else if(twoCnt != 0) 
+        {
+            temp->data = 2;
+            twoCnt--;
+        }
+        
+         temp = temp->next;
+    }
+    return head;
+}
